@@ -1,7 +1,5 @@
 <script setup>
 import RoundedCard from '@/components/RoundedCard.vue';
-
-
 </script>
 
 <template>

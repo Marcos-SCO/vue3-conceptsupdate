@@ -3,6 +3,7 @@ import BookingItem from './components/BookingItem.vue';
 import CourseItem from './components/CourseItem.vue';
 import { ref, onMounted } from 'vue';
 import SkeletonCourseItem from '@/components/SkeletonCourseItem.vue';
+import SkeletonBookingItem from './components/SkeletonBookingItem.vue';
 
 const courses = ref([]);
 const loading = ref(false);
@@ -62,7 +63,8 @@ onMounted(() => {
     </div>
 
     <h3 class="txt-2x font-medium">Your Courses</h3>
-    <div class="grid grid-cols-1 gap-4">
+    <div v-if="loading"><SkeletonBookingItem></SkeletonBookingItem></div>
+    <div v-else class="grid grid-cols-1 gap-4">
       <BookingItem v-for="i in 2" :key="i"></BookingItem>
     </div>
   </div>
