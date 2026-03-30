@@ -1,39 +1,28 @@
 {
-    "courses": [
-        {
-            "id": "1",
-            "title": "Vue course",
-            "price": 9.99,
-            "description": "Vue passion course",
-            "bought": true
-        },
-        {
-            "id": "2",
-            "title": "Go course",
-            "price": 9.99,
-            "description": "Go passion course",
-            "bought": true
-        },
-        {
-            "id": "3",
-            "title": "Dart course",
-            "price": 9.99,
-            "description": "Dart passion course",
-            "bought": false
-        }
-    ],
-    "bookings": [
-        {
-            "id": "1",
-            "title": "Vue course",
-            "courseId": "1",
-            "date": "2024-06-01"
-        },
-        {
-            "id": "2",
-            "title": "Go course",
-            "courseId": "2",
-            "date": "2024-06-02"
-        }
-    ]
+  "courses": [
+    {
+      "id": "1",
+      "title": "Vue course",
+      "price": 9.99,
+      "description": "Vue passion course",
+      "bought": true
+    },
+    {
+      "id": "2",
+      "title": "Go course",
+      "price": 9.99,
+      "description": "Go passion course",
+      "bought": true
+    },
+    {
+      "id": "3",
+      "title": "Dart course",
+      "price": 9.99,
+      "description": "Dart passion course",
+      "bought": false
+    }
+  ],
+  "bookings": [
+    
+  ]
 }

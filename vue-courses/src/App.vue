@@ -1,8 +1,8 @@
 <script setup>
 import BookingItem from './components/BookingItem.vue';
 import CourseItem from './components/CourseItem.vue';
-import { ref, onMounted } from 'vue';
 import SkeletonCourseItem from '@/components/SkeletonCourseItem.vue';
+import { ref, onMounted } from 'vue';
 import SkeletonBookingItem from './components/SkeletonBookingItem.vue';
 
 const courses = ref([]);
@@ -20,22 +20,37 @@ const fetchCourses = async () => {
 };
 
 const registerCourse = async (course) => {
-  const newCourses = {
-    id: Date.now().toString(),
-    title: course.title,
-    price: course.price,
-    description: course.description,
-    status: 'pending',
-  };
+  try {
+    if (bookings.value.some((booking) => booking.id == course.id)) {
+      alert('You have already registered for this course');
+      return;
+    }
 
-  await fetch('http://localhost:3001/courses', {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({
-      ...newCourses,
+    const newCourses = {
+      id: course.id,
+      title: course.title,
+      price: course.price,
+      description: course.description,
       status: 'pending',
-    }),
-  });
+    };
+
+    const response = await fetch('http://localhost:3001/bookings', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        ...newCourses,
+        status: 'confirmed',
+      }),
+    });
+
+    if (response.ok) {
+      const index = bookings.value.findIndex((booking) => booking.id === course.id);
+      bookings.value[index] = await response.json();
+    }
+
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const fetchBookings = async () => {
@@ -54,7 +69,7 @@ onMounted(() => {
   fetchCourses();
   fetchBookings();
 
-  console.log(bookings.value.length)
+  console.log(bookings.value.length);
 });
 </script>
 
@@ -81,7 +96,11 @@ onMounted(() => {
     <h3 class="txt-2x font-medium">Your Courses</h3>
     <div v-if="loading"><SkeletonBookingItem v-for="i in 2" :key="i"></SkeletonBookingItem></div>
     <div v-else class="grid grid-cols-1 gap-4">
-      <BookingItem v-for="booking in bookings" :key="booking.id" :title="booking.title"></BookingItem>
+      <BookingItem
+        v-for="booking in bookings"
+        :key="booking.id"
+        :title="booking.title"
+      ></BookingItem>
     </div>
   </div>
 </template>
