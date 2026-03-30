@@ -6,6 +6,7 @@ import SkeletonCourseItem from '@/components/SkeletonCourseItem.vue';
 import SkeletonBookingItem from './components/SkeletonBookingItem.vue';
 
 const courses = ref([]);
+const bookings = ref([]);
 const loading = ref(false);
 
 const fetchCourses = async () => {
@@ -37,8 +38,23 @@ const registerCourse = async (course) => {
   });
 };
 
+const fetchBookings = async () => {
+  loading.value = true;
+  try {
+    const response = await fetch('http://localhost:3001/bookings');
+    bookings.value = await response.json();
+  } catch (error) {
+    console.error(error);
+  } finally {
+    loading.value = false;
+  }
+};
+
 onMounted(() => {
   fetchCourses();
+  fetchBookings();
+
+  console.log(bookings.value.length)
 });
 </script>
 
@@ -63,9 +79,9 @@ onMounted(() => {
     </div>
 
     <h3 class="txt-2x font-medium">Your Courses</h3>
-    <div v-if="loading"><SkeletonBookingItem></SkeletonBookingItem></div>
+    <div v-if="loading"><SkeletonBookingItem v-for="i in 2" :key="i"></SkeletonBookingItem></div>
     <div v-else class="grid grid-cols-1 gap-4">
-      <BookingItem v-for="i in 2" :key="i"></BookingItem>
+      <BookingItem v-for="booking in bookings" :key="booking.id"></BookingItem>
     </div>
   </div>
 </template>
