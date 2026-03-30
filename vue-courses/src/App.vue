@@ -1,6 +1,18 @@
 <script setup>
 import BookingItem from './components/BookingItem.vue';
 import CourseItem from './components/CourseItem.vue';
+import { ref, onMounted } from 'vue';
+
+const courses = ref([]);
+
+const fetchCourses = async () => {
+  const response = await fetch('http://localhost:3001/courses');
+  courses.value = await response.json();
+};
+
+onMounted(() => {
+  fetchCourses();
+});
 </script>
 
 <template>
@@ -11,11 +23,11 @@ import CourseItem from './components/CourseItem.vue';
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <CourseItem
-        v-for="i in 1"
-        :key="i"
-        title="Vue Course"
-        price="9.99"
-        description="Learn Vue.js from scratch."
+        v-for="course in courses"
+        :key="course.id"
+        :title="course.title"
+        :price="course.price"
+        :description="course.description"
         @click="console.log('RAWWW')"
       />
     </div>
@@ -25,6 +37,5 @@ import CourseItem from './components/CourseItem.vue';
     <div class="grid grid-cols-1 gap-4">
       <BookingItem v-for="i in 2" :key="i"></BookingItem>
     </div>
-
   </div>
 </template>
