@@ -81,7 +81,7 @@ onMounted(() => {
     <h3 class="txt-2x font-medium">Your Courses</h3>
     <div v-if="loading"><SkeletonBookingItem v-for="i in 2" :key="i"></SkeletonBookingItem></div>
     <div v-else class="grid grid-cols-1 gap-4">
-      <BookingItem v-for="booking in bookings" :key="booking.id"></BookingItem>
+      <BookingItem v-for="booking in bookings" :key="booking.id" :title="booking.title"></BookingItem>
     </div>
   </div>
 </template>

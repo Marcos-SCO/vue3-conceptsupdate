@@ -25,11 +25,13 @@
     "bookings": [
         {
             "id": "1",
+            "title": "Vue course",
             "courseId": "1",
             "date": "2024-06-01"
         },
         {
             "id": "2",
+            "title": "Go course",
             "courseId": "2",
             "date": "2024-06-02"
         }
