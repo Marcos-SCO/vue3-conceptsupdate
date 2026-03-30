@@ -4,10 +4,16 @@ import CourseItem from './components/CourseItem.vue';
 import { ref, onMounted } from 'vue';
 
 const courses = ref([]);
+const loading = ref(false);
 
 const fetchCourses = async () => {
-  const response = await fetch('http://localhost:3001/courses');
-  courses.value = await response.json();
+  try {
+    loading.value = true;
+    const response = await fetch('http://localhost:3001/courses');
+    courses.value = await response.json();
+  } finally {
+    loading.value = false;
+  }
 };
 
 onMounted(() => {
@@ -21,7 +27,8 @@ onMounted(() => {
 
     <h2 class="txt-2x font-medium">All Courses</h2>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div v-if="loading">Courses are loading...</div>
+    <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <CourseItem
         v-for="course in courses"
         :key="course.id"
