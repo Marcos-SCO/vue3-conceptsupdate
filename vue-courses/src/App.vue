@@ -17,6 +17,25 @@ const fetchCourses = async () => {
   }
 };
 
+const registerCourse = async (course) => {
+  const newCourses = {
+    id: Date.now().toString(),
+    title: course.title,
+    price: course.price,
+    description: course.description,
+    status: 'pending',
+  };
+
+  await fetch('http://localhost:3001/courses', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      ...newCourses,
+      status: 'pending',
+    }),
+  });
+};
+
 onMounted(() => {
   fetchCourses();
 });
@@ -38,12 +57,11 @@ onMounted(() => {
         :title="course.title"
         :price="course.price"
         :description="course.description"
-        @click="console.log('RAWWW')"
+        @click="registerCourse(course)"
       />
     </div>
 
     <h3 class="txt-2x font-medium">Your Courses</h3>
-
     <div class="grid grid-cols-1 gap-4">
       <BookingItem v-for="i in 2" :key="i"></BookingItem>
     </div>

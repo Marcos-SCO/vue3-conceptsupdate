@@ -21,7 +21,7 @@ defineEmits(['click']);
       <p>{{ description }}</p>
 
       <div class="flex justify-end p-4">
-        <RoundedButton @click="$emit('click')">Book Now</RoundedButton>
+        <RoundedButton @click="$emit('click')">Purchase</RoundedButton>
       </div>
     </template>
   </CardSections>
